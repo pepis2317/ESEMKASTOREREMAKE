@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:paddingBottom="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="20dp"
+            >
+
+            <ImageView
+                android:id="@+id/productImageView"
+                android:layout_width="80dp"
+                android:layout_height="80dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="9"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/nameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="21sp"
+                    android:textStyle="bold"
+                    android:text="Name" />
+
+                <TextView
+                    android:id="@+id/priceTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="Price" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:gravity="center"
+            android:layout_height="40dp"
+
+            android:orientation="horizontal">
+            <Button
+                android:background="@drawable/round_button"
+                android:layout_weight="1"
+                android:id="@+id/deleteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:text="Delete" />
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:gravity="center"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_weight="1"
+                    android:background="@drawable/round_button"
+                    android:id="@+id/decrement"
+                    android:padding="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/baseline_remove_24" />
+                <TextView
+                    android:id="@+id/quantityTextView"
+                    android:gravity="center"
+                    android:layout_weight="3"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bluish_rounded"
+                    android:text="q" />
+
+                <ImageView
+                    android:layout_weight="1"
+                    android:background="@drawable/round_button"
+                    android:id="@+id/increment"
+                    android:padding="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+
+                    app:srcCompat="@drawable/baseline_add_24" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
