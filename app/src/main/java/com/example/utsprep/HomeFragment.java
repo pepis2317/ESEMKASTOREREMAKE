@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.SearchView;
 
 import com.example.utsprep.models.Adapter;
 import com.example.utsprep.models.CartAdapter;
@@ -35,6 +37,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
+    private SearchView search;
+    private LinearLayout pBar;
     private RecyclerView recyclerView;
     private Adapter adapter;
     List<Product> products = new ArrayList<>();
@@ -88,11 +92,31 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         fetchProducts();
+        search = view.findViewById(R.id.search);
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView = view.findViewById(R.id.recyclerView);
+        pBar = view.findViewById(R.id.pBar);
         adapter = new Adapter(getContext(), products);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.filter(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (newText.trim().isEmpty()) {
+                    adapter.filter(""); // This shows all items
+                }
+                return true;
+            }
+
+
+        });
+
 
     }
     private void fetchProducts() {
@@ -103,9 +127,12 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if(response.isSuccessful()&& response.body()!=null){
-                    Log.d("MainActivity", "onResponse: "+response.body());
-                    Log.d("MainActivity", "onResponse: "+response.body().size());
+
+                    products.clear();
                     products.addAll(response.body());
+                    pBar.setVisibility(View.GONE);
+                    adapter = new Adapter(getContext(), products); // Create a new adapter with updated list
+                    recyclerView.setAdapter(adapter); // Set the adapter again
                     adapter.notifyDataSetChanged();
                 }
             }

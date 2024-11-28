@@ -1,5 +1,6 @@
 package com.example.utsprep;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,15 +9,29 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.utsprep.models.CartAdapter;
 import com.example.utsprep.models.CartItem;
 import com.example.utsprep.models.Product;
 import com.example.utsprep.models.Rating;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +42,18 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class CartFragment extends Fragment {
+    private Button ok;
+    private LinearLayout thanks;
+    private Button checkOut;
+    private TextView total;
+    private LinearLayout pBar;
     private List<CartItem> items;
     private RecyclerView recyclerView;
     private CartAdapter adapter;
+    private String email = "";
+    FirebaseFirestore db ;
+    FirebaseAuth auth;
+    FirebaseUser user;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -80,25 +104,110 @@ public class CartFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        FirebaseApp.initializeApp(getContext());
+        ok = view.findViewById(R.id.ok);
+        total = view.findViewById(R.id.total);
+        thanks = view.findViewById(R.id.thanks);
+        checkOut = view.findViewById(R.id.checkOut);
+        pBar = view.findViewById(R.id.pBar);
         items = new ArrayList<>();
-        Product p1 = new Product(1, "Product 1", 10.0, "Description 1", "Category 1", "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg", new Rating(1,1));
-        Product p2 = new Product(2, "Product 2", 15.0, "Description 2", "Category 2", "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg", new Rating(1,1));
-        CartItem c1 = new CartItem(1, p1, 2);
-        CartItem c2 = new CartItem(2, p2, 1);
-        CartItem c3 = new CartItem(3, p2, 1);
-        CartItem c4 = new CartItem(4, p2, 1);
-        CartItem c5 = new CartItem(5, p2, 1);
-        CartItem c6 = new CartItem(6, p2, 1);
-        items.add(c1);
-        items.add(c2);
-        items.add(c3);
-        items.add(c4);
-        items.add(c5);
-        items.add(c6);
+        db =  FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
         recyclerView = view.findViewById(R.id.recyclerView);
-        adapter = new CartAdapter(getContext(), items);
+        adapter = new CartAdapter(getContext(), items, this::updateTotal);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        if(user == null){
+            Intent intent = new Intent(getContext(), LoginActivity.class);
+            startActivity(intent);
+            if (getActivity() != null) {
+                getActivity().finish();
+            }
+        }else{
+            email =user.getEmail();
+        }
+
+        db.collection("cartCollection")
+                .whereEqualTo("email", email)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+
+                        // Loop through the documents in the query result
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            // Access each document's data
+                            String docId = document.getId();
+                            int quantity = document.getDouble("quantity").intValue();
+                            int id = document.getDouble("id").intValue();
+                            String title = document.getString("title");
+                            double price = document.getDouble("price").doubleValue();
+                            String description = document.getString("description");
+                            String category = document.getString("category");
+                            String image = document.getString("image");
+                            double rate = document.getDouble("rate").doubleValue();
+                            int count = document.getDouble("count").intValue();
+
+                            Product p = new Product(id, title, price, description, category, image, new Rating(rate, count));
+                            CartItem c = new CartItem(docId, p, quantity);
+                            items.add(c);
+
+                        }
+                        pBar.setVisibility(View.GONE);
+                        adapter.notifyDataSetChanged();
+                        updateTotal();
+                    } else {
+                        // Handle any errors
+                        Log.e("FirestoreQuery", "Error getting documents: ", task.getException());
+                    }
+                });
+        checkOut.setOnClickListener(e -> {
+            db.collection("cartCollection")
+                    .whereEqualTo("email", email)
+                    .get()
+                    .addOnSuccessListener(querySnapshot -> {
+                        List<DocumentSnapshot> documents = querySnapshot.getDocuments();
+                        if (documents.isEmpty()) {
+                            // No documents to delete, update immediately
+                            return;
+                        }
+
+                        // Collect all delete tasks
+                        List<Task<Void>> deleteTasks = new ArrayList<>();
+                        for (DocumentSnapshot document : documents) {
+                            deleteTasks.add(document.getReference().delete());
+                        }
+
+                        // Wait for all delete tasks to complete
+                        Tasks.whenAll(deleteTasks)
+                                .addOnSuccessListener(aVoid -> {
+                                    // All deletions are complete
+                                    items.clear();
+                                    adapter.notifyDataSetChanged();
+                                    updateTotal();
+                                    thanks.setVisibility(View.VISIBLE);
+
+                                })
+                                .addOnFailureListener(error -> {
+                                    Log.e("Firestore", "Error during batch delete", error);
+                                });
+                    })
+                    .addOnFailureListener(error -> {
+                        Log.e("Firestore", "Error fetching documents", error);
+                    });
+        });
+        ok.setOnClickListener(e->{
+            thanks.setVisibility(View.GONE);
+        });
+
+
+    }
+    private void updateTotal() {
+        double totalPrice = 0;
+        for (CartItem item : items) {
+            totalPrice += item.getProduct().getPrice() * item.getQuantity();
+        }
+        total.setText(String.format("Total: $%.2f", totalPrice));
     }
 }

@@ -67,7 +67,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Product Stock"/>
+        <ProgressBar
+            android:layout_marginTop="20dp"
+            android:id="@+id/pBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
         <LinearLayout
+            android:id="@+id/addLayout"
+            android:visibility="gone"
             android:layout_marginTop="20dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -106,7 +114,9 @@
 
                     app:srcCompat="@drawable/baseline_add_24" />
             </LinearLayout>
+
             <Button
+                android:visibility="gone"
                 android:id="@+id/addToCart"
                 android:layout_width="match_parent"
                 android:background="@drawable/round_button"
@@ -116,6 +126,17 @@
                 android:textColor="@color/white"
                 android:textAllCaps="false"
                 android:text="Add to Cart"/>
+            <Button
+                android:visibility="gone"
+                android:id="@+id/update"
+                android:layout_width="match_parent"
+                android:background="@drawable/round_button"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:text="Update"/>
         </LinearLayout>
 
 
