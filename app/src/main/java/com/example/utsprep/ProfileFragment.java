@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +20,7 @@ import android.widget.Button;
  */
 public class ProfileFragment extends Fragment {
 
+    ImageView profilePic;
     Button uploadphoto;
     Button editdata;
     Button logout;

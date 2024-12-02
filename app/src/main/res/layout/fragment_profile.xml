@@ -64,16 +64,15 @@
                     android:id="@+id/usernameTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Username: "
-                    android:textSize="19sp"/>
+                    android:text="Username          : "
+                    android:textSize="19sp" />
 
                 <TextView
                     android:id="@+id/username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="myusername"
-                    android:textSize="19sp"
-                    android:textAlignment="textEnd"/>
+                    android:textSize="19sp" />
 
             </LinearLayout>
 
@@ -95,7 +94,7 @@
                     android:id="@+id/birthdayTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Birthday: "
+                    android:text="Birthday              : "
                     android:textSize="19sp"/>
 
                 <TextView
@@ -103,8 +102,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="99 Desember 9999"
-                    android:textSize="19sp"
-                    android:textAlignment="textEnd"/>
+                    android:textSize="19sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -125,7 +123,7 @@
                     android:id="@+id/phoneNumTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Phone Number: "
+                    android:text="Phone Number : "
                     android:textSize="19sp"/>
 
                 <TextView
@@ -133,8 +131,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="08888888888"
-                    android:textSize="19sp"
-                    android:textAlignment="textEnd"/>
+                    android:textSize="19sp" />
 
             </LinearLayout>
 
@@ -156,7 +153,7 @@
                     android:id="@+id/addressTv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Address: "
+                    android:text="Address :"
                     android:textSize="19sp"/>
 
             </LinearLayout>
