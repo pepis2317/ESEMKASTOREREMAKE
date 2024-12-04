@@ -3,21 +3,21 @@ package com.example.utsprep.models;
 import android.os.Parcelable;
 
 public class CartItem {
-    private int id;
+    private String id;
     private Product product;
     private int quantity;
 
-    public CartItem(int id, Product product, int quantity) {
+    public CartItem(String id, Product product, int quantity) {
         this.id = id;
         this.product = product;
         this.quantity = quantity;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
