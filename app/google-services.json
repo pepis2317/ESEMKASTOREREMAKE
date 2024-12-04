@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "360694259543",
+    "project_id": "esemkastoreremake",
+    "storage_bucket": "esemkastoreremake.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:360694259543:android:356fa5222005400948e812",
+        "android_client_info": {
+          "package_name": "com.example.utsprep"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "360694259543-dgs5ch4gc3sphkbkavvfd08nsvhgq5l3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.utsprep",
+            "certificate_hash": "aec13ac967d30d304b4ac01ce9bf3c55d5c811e1"
+          }
+        },
+        {
+          "client_id": "360694259543-r8uebl876r82hb68at2nv1jasb6k2sc1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvaUj08ljJHYKUXpunxaqdDhy0Ox42aKw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "360694259543-r8uebl876r82hb68at2nv1jasb6k2sc1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -2,6 +2,7 @@ package com.example.utsprep.models;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,16 +16,20 @@ import com.bumptech.glide.Glide;
 import com.example.utsprep.ProductDetailsActivity;
 import com.example.utsprep.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     Context context;
     List<Product> products;
+    List<Product> filteredProducts;
 
     public Adapter(Context context, List<Product> products) {
         this.context = context;
         this.products = products;
+        this.filteredProducts = new ArrayList<>(products);
     }
+
     @NonNull
     @Override
     public Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -35,7 +40,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull Adapter.ViewHolder holder, int position) {
-        Product product = products.get(position);
+        Product product = filteredProducts.get(position);
         holder.name.setText(product.getTitle());
         holder.price.setText(String.valueOf(product.getPrice()));
         Glide.with(context).load(product.getImage()).into(holder.image);
@@ -48,7 +53,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return products.size();
+        return filteredProducts.size();
     }
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
@@ -60,5 +65,21 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             name = itemView.findViewById(R.id.nameTextView);
             price = itemView.findViewById(R.id.priceTextView);
         }
+    }
+    public void filter(String query){
+        filteredProducts.clear();
+        if(query.isEmpty()){
+            filteredProducts.addAll(products);
+
+            Log.d("TEST", "This shit empty");
+        }else{
+            for (Product product : products) {
+                if (product.getTitle() != null && product.getTitle().toLowerCase().contains(query.toLowerCase())) {
+                    Log.d("TEST", product.getTitle());
+                    filteredProducts.add(product); // Add matching items
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 }
