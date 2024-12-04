@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -32,9 +33,14 @@ android {
 }
 
 dependencies {
+    implementation("com.google.firebase:firebase-firestore:24.8.0")
+    implementation("com.google.firebase:firebase-auth:22.0.2")
+    implementation("com.google.firebase:firebase-core:21.1.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.github.bumptech.glide:glide:4.15.1")
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
     implementation(libs.appcompat)
     implementation(libs.material)

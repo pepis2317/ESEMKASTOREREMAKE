@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".CartFragment">
 
+    <LinearLayout
+        android:id="@+id/pBar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
+        app:layout_constraintTop_toTopOf="@+id/recyclerView">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
@@ -29,21 +41,15 @@
         app:layout_constraintTop_toBottomOf="@+id/recyclerView"
         app:layout_constraintVertical_bias="1.0">
 
-        <TextView
-            android:id="@+id/discount"
-            android:layout_width="match_parent"
-            android:textStyle="bold"
-            android:textSize="21sp"
-            android:layout_height="wrap_content"
-            android:text="Discount: ???" />
+
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/total"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="21sp"
             android:textStyle="bold"
-            android:text="Total: ???" />
+            android:text="Total: $0.00" />
 
         <Button
             android:id="@+id/checkOut"
@@ -54,5 +60,44 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Check Out" />
+    </LinearLayout>
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/thanks"
+        android:layout_width="match_parent"
+        android:background="@color/tealTransparent"
+        android:gravity="center"
+        android:layout_height="match_parent">
+        <LinearLayout
+
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="@drawable/white_rounded"
+            android:elevation="10dp"
+            android:layout_margin="50dp">
+
+            <ImageView
+                android:layout_width="245dp"
+                android:layout_height="323dp"
+                android:layout_marginBottom="20dp"
+                app:srcCompat="@drawable/yay" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thank you for your purchase!"/>
+            <Button
+                android:id="@+id/ok"
+                android:background="@drawable/round_button"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/white"
+                android:layout_marginTop="20dp"
+                android:textAllCaps="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ok" />
+        </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
