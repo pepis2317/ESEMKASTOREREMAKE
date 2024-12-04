@@ -33,7 +33,6 @@
             android:text="Name"/>
         <TextView
             android:id="@+id/email"
-            android:layout_marginTop="20dp"
             android:textSize="21sp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="15dp"

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,7 +32,6 @@ public class ProfileFragment extends Fragment {
     ImageView profilePic;
     Button uploadphoto;
     Button editdata;
-    Button logout;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -83,6 +83,8 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        uploadphoto = view.findViewById(R.id.uploadphoto);
+        editdata = view.findViewById(R.id.editdata);
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
         email = view.findViewById(R.id.email);
@@ -96,6 +98,23 @@ public class ProfileFragment extends Fragment {
         }else{
             email.setText(user.getEmail());
         }
+        uploadphotoBtn();
+        editdataBtn();
+        logoutBtn();
+    }
+    private void uploadphotoBtn(){
+        uploadphoto.setOnClickListener(e->{
+            Toast.makeText(getContext(),"Upload Photo",Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    private void editdataBtn(){
+        editdata.setOnClickListener(e->{
+            Toast.makeText(getContext(),"Edit Data",Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    private void logoutBtn(){
         logout.setOnClickListener(e->{
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(getContext(), LoginActivity.class);
@@ -103,23 +122,6 @@ public class ProfileFragment extends Fragment {
             if (getActivity() != null) {
                 getActivity().finish();
             }
-        });
-    }
-    private void uploadphotoBtn(){
-        uploadphoto.setOnClickListener(e->{
-
-        });
-    }
-
-    private void editdataBtn(){
-        editdata.setOnClickListener(e->{
-
-        });
-    }
-
-    private void logoutBtn(){
-        logout.setOnClickListener(e->{
-
         });
     }
 
