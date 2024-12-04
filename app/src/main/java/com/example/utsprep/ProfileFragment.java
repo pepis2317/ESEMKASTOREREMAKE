@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import android.widget.ImageView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +28,11 @@ public class ProfileFragment extends Fragment {
     FirebaseUser user;
     TextView email;
     Button logout;
+    ImageView profilePic;
+    Button uploadphoto;
+    Button editdata;
+    Button logout;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -99,4 +105,22 @@ public class ProfileFragment extends Fragment {
             }
         });
     }
+    private void uploadphotoBtn(){
+        uploadphoto.setOnClickListener(e->{
+
+        });
+    }
+
+    private void editdataBtn(){
+        editdata.setOnClickListener(e->{
+
+        });
+    }
+
+    private void logoutBtn(){
+        logout.setOnClickListener(e->{
+
+        });
+    }
+
 }
