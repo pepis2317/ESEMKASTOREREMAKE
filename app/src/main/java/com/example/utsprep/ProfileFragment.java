@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,6 +19,11 @@ import android.widget.Button;
  * create an instance of this fragment.
  */
 public class ProfileFragment extends Fragment {
+
+    ImageView profilePic;
+    Button uploadphoto;
+    Button editdata;
+    Button logout;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -63,6 +69,24 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false);
+    }
+
+    private void uploadphotoBtn(){
+        uploadphoto.setOnClickListener(e->{
+
+        });
+    }
+
+    private void editdataBtn(){
+        editdata.setOnClickListener(e->{
+
+        });
+    }
+
+    private void logoutBtn(){
+        logout.setOnClickListener(e->{
+
+        });
     }
 
 }
