@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity">
+    tools:context=".RegisterActivity2">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,50 +32,78 @@
             android:text="EsemkaStore" />
 
         <EditText
-            android:id="@+id/email"
+            android:id="@+id/nameR"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:background="@drawable/bluish_rounded"
             android:layout_marginBottom="20dp"
-            android:padding="20dp"
-            android:hint="Email"
-            android:inputType="textEmailAddress" />
+            android:padding="15dp"
+            android:hint="Name"
+            android:inputType="text" />
 
         <EditText
-            android:hint="Password"
+            android:hint="Username"
             android:background="@drawable/bluish_rounded"
-            android:padding="20dp"
-            android:id="@+id/password"
+            android:padding="15dp"
+            android:id="@+id/usernameR"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:ems="10"
-            android:inputType="textPassword" />
+            android:inputType="text" />
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        <EditText
+            android:hint="Birthday"
+            android:background="@drawable/bluish_rounded"
+            android:padding="15dp"
+            android:id="@+id/birthdayR"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:ems="10"
+            android:inputType="text" />
+
+        <EditText
+            android:hint="Phone Number"
+            android:background="@drawable/bluish_rounded"
+            android:padding="15dp"
+            android:id="@+id/phoneNumR"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:ems="10"
+            android:inputType="number" />
+
+        <EditText
+            android:hint="Address"
+            android:background="@drawable/bluish_rounded"
+            android:padding="15dp"
+            android:id="@+id/addressR"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:ems="10"
+            android:inputType="text" />
+
+        <fragment
+            android:id="@+id/map_fragment"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
         <Button
-            android:id="@+id/nextButton"
+            android:id="@+id/registerButton"
             android:background="@drawable/round_button"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
             android:padding="20dp"
             android:layout_marginBottom="30dp"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:text="Next" />
-
-        <TextView
-            android:id="@+id/loginText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:text="Login Here"
-            android:textColor="#ff0063"/>
+            android:text="Register" />
     </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

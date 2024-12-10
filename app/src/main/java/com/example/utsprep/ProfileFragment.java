@@ -1,6 +1,8 @@
 package com.example.utsprep;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -28,10 +30,16 @@ public class ProfileFragment extends Fragment {
     FirebaseAuth auth;
     FirebaseUser user;
     TextView email;
+    TextView name;
+    TextView username;
+    TextView birthday;
+    TextView phoneNum;
+    TextView address;
     Button logout;
     ImageView profilePic;
     Button uploadphoto;
     Button editdata;
+    SharedPreferences sp;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -88,6 +96,20 @@ public class ProfileFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
         email = view.findViewById(R.id.email);
+        name = view.findViewById(R.id.name);
+        username = view.findViewById(R.id.username);
+        birthday = view.findViewById(R.id.birthday);
+        phoneNum = view.findViewById(R.id.phoneNum);
+        address = view.findViewById(R.id.address);
+
+        SharedPreferences sp = getContext().getSharedPreferences("Users", Context.MODE_PRIVATE);
+        String namee = sp.getString("name", "");
+        String usernamee = sp.getString("username","");
+        String birthdayy = sp.getString("birthday", "");
+        String phoneNumm = sp.getString("phoneNum", "");
+        String addresss = sp.getString("address", "");
+
+
         logout = view.findViewById(R.id.logout);
         if(user == null){
             Intent intent = new Intent(getContext(), LoginActivity.class);
@@ -97,6 +119,11 @@ public class ProfileFragment extends Fragment {
             }
         }else{
             email.setText(user.getEmail());
+            name.setText(namee);
+            username.setText(usernamee);
+            phoneNum.setText(phoneNumm);
+            birthday.setText(birthdayy);
+            address.setText(addresss);
         }
         uploadphotoBtn();
         editdataBtn();
@@ -110,7 +137,8 @@ public class ProfileFragment extends Fragment {
 
     private void editdataBtn(){
         editdata.setOnClickListener(e->{
-            Toast.makeText(getContext(),"Edit Data",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getContext(), EditDataActivity.class);
+            startActivity(intent);
         });
     }
 
