@@ -16,6 +16,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import android.widget.ImageView;
@@ -26,7 +32,7 @@ import android.widget.Toast;
  * Use the {@link ProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements OnMapReadyCallback {
     FirebaseAuth auth;
     FirebaseUser user;
     TextView email;
@@ -40,6 +46,9 @@ public class ProfileFragment extends Fragment {
     Button uploadphoto;
     Button editdata;
     SharedPreferences sp;
+    GoogleMap map;
+    MapView mapView;
+    FusedLocationProviderClient fusedLocationClient;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -71,6 +80,19 @@ public class ProfileFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        SharedPreferences sp = getContext().getSharedPreferences("Users", Context.MODE_PRIVATE);
+        email.setText(user.getEmail());
+        name.setText(sp.getString("name", ""));
+        username.setText(sp.getString("username", ""));
+        phoneNum.setText(sp.getString("phoneNum", ""));
+        birthday.setText(sp.getString("birthday", ""));
+        address.setText(sp.getString("address", ""));
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,6 +123,7 @@ public class ProfileFragment extends Fragment {
         birthday = view.findViewById(R.id.birthday);
         phoneNum = view.findViewById(R.id.phoneNum);
         address = view.findViewById(R.id.address);
+        mapView = view.findViewById(R.id.mapView);
 
         SharedPreferences sp = getContext().getSharedPreferences("Users", Context.MODE_PRIVATE);
         String namee = sp.getString("name", "");
@@ -124,6 +147,13 @@ public class ProfileFragment extends Fragment {
             phoneNum.setText(phoneNumm);
             birthday.setText(birthdayy);
             address.setText(addresss);
+
+            mapView.onCreate(savedInstanceState);
+            mapView.getMapAsync(this::onMapReady);
+
+//            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this::getContext);
+//
+//            MapsInitializer.initialize(this::onMapReady);
         }
         uploadphotoBtn();
         editdataBtn();
@@ -153,4 +183,8 @@ public class ProfileFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        map = googleMap;
+    }
 }

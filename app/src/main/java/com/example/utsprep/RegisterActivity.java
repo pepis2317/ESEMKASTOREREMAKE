@@ -31,6 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     ProgressBar progressBar;
     TextView loginText;
+
     @Override
     public void onStart() {
         super.onStart();
@@ -42,6 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
             finish();
         }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

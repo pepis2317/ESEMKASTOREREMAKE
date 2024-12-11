@@ -8,16 +8,22 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -25,10 +31,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
-public class RegisterActivity2 extends AppCompatActivity implements OnMapReadyCallback {
+public class RegisterActivity2 extends AppCompatActivity {
 
     FirebaseAuth mAuth;
     EditText nameR;
@@ -38,7 +45,11 @@ public class RegisterActivity2 extends AppCompatActivity implements OnMapReadyCa
     EditText addressR;
     Button registerButton;
     SharedPreferences sp;
-    GoogleMap mMap;
+//    GoogleMap map;
+//    MapView mapView;
+//    FusedLocationProviderClient fusedLocationClient;
+//    TextView tapTextView;
+//    TextView cameraTextView;
 
 //    public void onStart() {
 //        super.onStart();
@@ -101,11 +112,14 @@ public class RegisterActivity2 extends AppCompatActivity implements OnMapReadyCa
             PlacesClient placesClient = Places.createClient(this);
 
             // Setup Google Map
-            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.map_fragment);
-            if (mapFragment != null) {
-                mapFragment.getMapAsync(this);
-            }
+//            mapView = findViewById(R.id.mapView);
+//
+//            mapView.onCreate(savedInstanceState);
+//            mapView.getMapAsync(this);
+//
+//            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+//
+//            MapsInitializer.initialize(this);
 
             sp = getSharedPreferences("Users", MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
@@ -126,38 +140,8 @@ public class RegisterActivity2 extends AppCompatActivity implements OnMapReadyCa
         });
     }
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-    }
-
-    private void showLocationOnMap() {
-        String address = addressR.getText().toString();
-        if (!address.isEmpty()) {
-            searchLocation(address);
-        }
-    }
-
-    private void searchLocation(String address) {
-        // Gunakan Geocoding untuk mengubah alamat menjadi koordinat
-        new Thread(() -> {
-            try {
-                List<Address> addresses = new Geocoder(this).getFromLocationName(address, 1);
-                if (addresses != null && !addresses.isEmpty()) {
-                    Address location = addresses.get(0);
-                    double latitude = location.getLatitude();
-                    double longitude = location.getLongitude();
-
-                    runOnUiThread(() -> {
-                        LatLng latLng = new LatLng(latitude, longitude);
-                        mMap.clear();
-                        mMap.addMarker(new MarkerOptions().position(latLng).title(address));
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
-                    });
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start();
-    }
+//    @Override
+//    public void onMapReady(@NonNull GoogleMap googleMap) {
+//        map = googleMap;
+//    }
 }
