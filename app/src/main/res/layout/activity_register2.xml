@@ -76,7 +76,7 @@
             android:inputType="number" />
 
         <EditText
-            android:hint="Address"
+            android:hint="Address Detail"
             android:background="@drawable/bluish_rounded"
             android:padding="15dp"
             android:id="@+id/addressR"
@@ -86,20 +86,22 @@
             android:ems="10"
             android:inputType="text" />
 
-<!--        <com.google.android.gms.maps.MapView-->
-<!--            android:id="@+id/mapView"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"/>-->
 
-<!--        <TextView-->
-<!--            android:id="@+id/tapTextView"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"/>-->
+                <fragment
+                    android:id="@+id/map"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:name="com.google.android.gms.maps.SupportMapFragment" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/cameraTextView"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"/>-->
+        <TextView
+            android:id="@+id/tapTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/cameraTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <Button
             android:id="@+id/registerButton"

@@ -2,6 +2,7 @@ package com.example.utsprep;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -14,6 +15,8 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -27,6 +30,7 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.android.libraries.places.api.Places;
@@ -35,7 +39,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
-public class RegisterActivity2 extends AppCompatActivity {
+public class RegisterActivity2 extends AppCompatActivity implements OnMapReadyCallback{
 
     FirebaseAuth mAuth;
     EditText nameR;
@@ -45,22 +49,23 @@ public class RegisterActivity2 extends AppCompatActivity {
     EditText addressR;
     Button registerButton;
     SharedPreferences sp;
-//    GoogleMap map;
-//    MapView mapView;
-//    FusedLocationProviderClient fusedLocationClient;
-//    TextView tapTextView;
-//    TextView cameraTextView;
+    GoogleMap map;
+    FusedLocationProviderClient fusedLocationClient;
+    Marker selectedMarker;
+    TextView tapTextView;
+    TextView cameraTextView;
 
-//    public void onStart() {
-//        super.onStart();
-//        // Check if user is signed in (non-null) and update UI accordingly.
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
 //        FirebaseUser currentUser = mAuth.getCurrentUser();
-//        if(currentUser != null){
+//        if(nameR != null && usernameR != null && birthdayR != null && phoneNumR != null && addressR != null){
 //            Intent intent = new Intent(RegisterActivity2.this, BaseActivity.class);
 //            startActivity(intent);
 //            finish();
 //        }
-//    }
+        // gabisa gini gtau knp
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +84,15 @@ public class RegisterActivity2 extends AppCompatActivity {
         phoneNumR = findViewById(R.id.phoneNumR);
         addressR = findViewById(R.id.addressR);
         registerButton = findViewById(R.id.registerButton);
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(this);
+        }
+
         registerButton.setOnClickListener(e -> {
             String name = String.valueOf(this.nameR.getText());
             String username = String.valueOf(this.usernameR.getText());
@@ -106,21 +120,6 @@ public class RegisterActivity2 extends AppCompatActivity {
                 return;
             }
 
-            if (!Places.isInitialized()) {
-                Places.initialize(getApplicationContext(), "AIzaSyDViBc35cqGGAolX-8eY6l96lbY5p0b0nc");
-            }
-            PlacesClient placesClient = Places.createClient(this);
-
-            // Setup Google Map
-//            mapView = findViewById(R.id.mapView);
-//
-//            mapView.onCreate(savedInstanceState);
-//            mapView.getMapAsync(this);
-//
-//            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-//
-//            MapsInitializer.initialize(this);
-
             sp = getSharedPreferences("Users", MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
             editor.putString("name", name);
@@ -140,8 +139,67 @@ public class RegisterActivity2 extends AppCompatActivity {
         });
     }
 
-//    @Override
-//    public void onMapReady(@NonNull GoogleMap googleMap) {
-//        map = googleMap;
-//    }
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
+
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            showUserLocation();
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        }
+
+        map.setOnMapClickListener(point -> {
+            if (selectedMarker != null) {
+                selectedMarker.remove();
+            }
+
+            selectedMarker = map.addMarker(new MarkerOptions()
+                    .position(point)
+                    .title("Lokasi yang Dipilih"));
+
+            String selectedLatitude = String.valueOf(point.latitude);
+            String selectedLongitude = String.valueOf(point.longitude);
+
+            sp = getSharedPreferences("Users", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("Lat", selectedLatitude);
+            editor.putString("Lng", selectedLongitude);
+            editor.apply();
+        });
+    }
+
+    private void showUserLocation() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            return;
+        }
+
+        fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
+            if (location != null) {
+                LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
+
+                map.addMarker(new MarkerOptions().position(currentLocation).title("Your Location"));
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15));
+            } else {
+                Toast.makeText(this, "Tidak dapat menemukan lokasi.", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(e -> {
+            Toast.makeText(this, "Gagal mendapatkan lokasi.", Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 1 && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            showUserLocation();
+        } else {
+            Toast.makeText(this, "Izin lokasi diperlukan untuk menggunakan fitur ini.", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
