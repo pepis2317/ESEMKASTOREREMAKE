@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity2">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+<!--        <TextView-->
+<!--            android:id="@+id/textView2"-->
+<!--            android:gravity="center"-->
+<!--            android:padding="20dp"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@drawable/teal_rounded"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textSize="32sp"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:layout_marginBottom="20dp"-->
+<!--            android:text="EsemkaStore" />-->
+
+        <EditText
+            android:id="@+id/nameR"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:background="@drawable/bluish_rounded"
+            android:layout_marginBottom="20dp"
+            android:padding="15dp"
+            android:hint="Name"
+            android:inputType="text" />
+
+        <EditText
+            android:hint="Username"
+            android:background="@drawable/bluish_rounded"
+            android:padding="15dp"
+            android:id="@+id/usernameR"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:ems="10"
+            android:inputType="text" />
+
+        <EditText
+            android:hint="Birthday"
+            android:background="@drawable/bluish_rounded"
+            android:padding="15dp"
+            android:id="@+id/birthdayR"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:ems="10"
+            android:inputType="date" />
+
+        <EditText
+            android:hint="Phone Number"
+            android:background="@drawable/bluish_rounded"
+            android:padding="15dp"
+            android:id="@+id/phoneNumR"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:ems="10"
+            android:inputType="number" />
+
+        <EditText
+            android:hint="Address Detail"
+            android:background="@drawable/bluish_rounded"
+            android:padding="15dp"
+            android:id="@+id/addressR"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:ems="10"
+            android:inputType="text" />
+
+
+                <fragment
+                    android:id="@+id/map"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:name="com.google.android.gms.maps.SupportMapFragment" />
+
+        <TextView
+            android:id="@+id/tapTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/cameraTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/registerButton"
+            android:background="@drawable/round_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:padding="20dp"
+            android:layout_marginBottom="30dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="Register" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

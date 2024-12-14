@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RegisterActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -58,22 +59,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <Button
-            android:id="@+id/registerButton"
+            android:id="@+id/nextButton"
             android:background="@drawable/round_button"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
             android:padding="20dp"
             android:layout_marginBottom="30dp"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:text="Register" />
+            android:text="Next" />
 
         <TextView
             android:id="@+id/loginText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:text="Login Here" />
+            android:text="Login Here"
+            android:textColor="#ff0063"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

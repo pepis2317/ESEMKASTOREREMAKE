@@ -27,10 +27,11 @@ import com.google.firebase.auth.FirebaseUser;
 public class RegisterActivity extends AppCompatActivity {
     EditText email;
     EditText password;
-    Button registerButton;
+    Button nextButton;
     FirebaseAuth mAuth;
     ProgressBar progressBar;
     TextView loginText;
+
     @Override
     public void onStart() {
         super.onStart();
@@ -42,6 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
             finish();
         }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,8 +59,8 @@ public class RegisterActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
-        registerButton = findViewById(R.id.registerButton);
-        registerButton.setOnClickListener(e->{
+        nextButton = findViewById(R.id.nextButton);
+        nextButton.setOnClickListener(e->{
             progressBar.setVisibility(View.VISIBLE);
             String email = String.valueOf(this.email.getText());
             String password = String.valueOf(this.password.getText());
@@ -81,7 +83,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         Toast.LENGTH_SHORT).show();
                                 FirebaseUser currentUser = mAuth.getCurrentUser();
                                 if(currentUser != null){
-                                    Intent intent = new Intent(RegisterActivity.this, BaseActivity.class);
+                                    Intent intent = new Intent(RegisterActivity.this, RegisterActivity2.class);
                                     startActivity(intent);
                                     finish();
                                 }
