@@ -41,9 +41,11 @@
             android:id="@+id/birthdayR"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusable="false"
+            android:clickable="true"
             android:layout_marginBottom="20dp"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="none" />
 
         <EditText
             android:hint="Phone Number"
