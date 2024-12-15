@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.utsprep.ProductDetailsActivity;
+import com.example.utsprep.BackActivity;
 import com.example.utsprep.R;
 
 import java.util.ArrayList;
@@ -45,8 +45,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         holder.price.setText(String.valueOf(product.getPrice()));
         Glide.with(context).load(product.getImage()).into(holder.image);
         holder.itemView.setOnClickListener(e->{
-            Intent intent = new Intent(context, ProductDetailsActivity.class);
-            intent.putExtra("product", product);
+            Intent intent = new Intent(context, BackActivity.class);
+            intent.putExtra("product", product); // Pass the product object
+            intent.putExtra("loadFragment", "productDetails"); // Indicate which fragment to load
             context.startActivity(intent);
         });
     }
