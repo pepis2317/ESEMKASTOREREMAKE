@@ -1,6 +1,7 @@
 package com.example.utsprep;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -24,6 +25,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -104,6 +107,28 @@ public class EditDataFragment extends Fragment {
                 birthdayR.setText(fetchedBirthday);
                 addressR.setText(fetchedAddress);
             }
+        });
+        birthdayR.setOnClickListener(e->{
+            Calendar calendar = Calendar.getInstance();
+
+            // Default to saved birthday
+            if (!birthdayR.getText().toString().isEmpty()) {
+                String[] parts = birthdayR.getText().toString().split("/");
+                calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(parts[0]));
+                calendar.set(Calendar.MONTH, Integer.parseInt(parts[1]) - 1);
+                calendar.set(Calendar.YEAR, Integer.parseInt(parts[2]));
+            }
+
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(),
+                    (view1, selectedYear, selectedMonth, selectedDay) -> {
+                        String newBirthday = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
+                        birthdayR.setText(newBirthday);
+                    }, year, month, day);
+            datePickerDialog.show();
         });
         setAddress.setOnClickListener(e->{
             Intent mapIntent = new Intent(getContext(), BackActivity.class);

@@ -1,6 +1,7 @@
 package com.example.utsprep;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -28,6 +29,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -77,6 +79,20 @@ public class RegisterActivity extends AppCompatActivity {
         nameR = findViewById(R.id.nameR);
         usernameR = findViewById(R.id.usernameR);
         birthdayR = findViewById(R.id.birthdayR);
+        birthdayR.setOnClickListener(e->{
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                    (view, selectedYear, selectedMonth, selectedDay) -> {
+                        String birthday = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
+                        birthdayR.setText(birthday);
+                    }, year, month, day);
+
+            datePickerDialog.show();
+        });
         phoneNumR = findViewById(R.id.phoneNumR);
         addressR = findViewById(R.id.addressR);
         setAddress = findViewById(R.id.setAddress);
