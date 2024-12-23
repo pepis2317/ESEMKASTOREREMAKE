@@ -127,7 +127,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if(response.isSuccessful()&& response.body()!=null){
-
                     products.clear();
                     products.addAll(response.body());
                     pBar.setVisibility(View.GONE);
