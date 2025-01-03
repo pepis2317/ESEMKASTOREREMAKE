@@ -45,14 +45,14 @@ public class MapsFragment extends Fragment {
         @Override
         public void onMapReady(GoogleMap googleMap) {
             currentLocation = new LatLng(-7.8028333,110.374138  );
-            marker = googleMap.addMarker(new MarkerOptions().position(currentLocation));
+//            marker = googleMap.addMarker(new MarkerOptions().position(currentLocation));
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 19));
             googleMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
                 @Override
                 public void onCameraIdle() {
                     LatLng cameraTarget = googleMap.getCameraPosition().target;
                     currentLocation = cameraTarget;
-                    marker.setPosition(cameraTarget);
+//                    marker.setPosition(cameraTarget);
                 }
             });
         }

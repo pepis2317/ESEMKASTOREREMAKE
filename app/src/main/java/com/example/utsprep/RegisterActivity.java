@@ -23,10 +23,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
@@ -131,10 +134,23 @@ public class RegisterActivity extends AppCompatActivity {
                                     docData.put("phoneNumber", phoneNum);
                                     docData.put("birthday", birthday);
                                     docData.put("addressDetail", address);
-                                    db.collection("usersCollection").add(docData);
-                                    Intent finishIntent = new Intent(RegisterActivity.this, BaseActivity.class);
-                                    startActivity(finishIntent);
-                                    finish();
+                                    db.collection("usersCollection").add(docData)
+                                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                                @Override
+                                                public void onSuccess(DocumentReference documentReference) {
+                                                    Intent finishIntent = new Intent(RegisterActivity.this, BaseActivity.class);
+                                                    startActivity(finishIntent);
+                                                    finish();
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(RegisterActivity.this, "Authentication failed. internal server error :(",
+                                                            Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+
                                 }
 
                             } else {
