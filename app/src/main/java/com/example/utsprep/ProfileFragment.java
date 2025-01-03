@@ -20,6 +20,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -55,6 +57,8 @@ public class ProfileFragment extends Fragment  {
     private ImageView profilePic;
     private Button uploadphoto;
     private Button editdata;
+    private LinearLayout pBar;
+    private LinearLayout profile;
 
 
 
@@ -119,6 +123,8 @@ public class ProfileFragment extends Fragment  {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        profile = view.findViewById(R.id.profile);
+        pBar = view.findViewById(R.id.pBar);
         uploadphoto = view.findViewById(R.id.uploadphoto);
         editdata = view.findViewById(R.id.editdata);
         db =  FirebaseFirestore.getInstance();
@@ -161,6 +167,8 @@ public class ProfileFragment extends Fragment  {
                 phoneNum.setText(fetchedPhoneNum);
                 birthday.setText(fetchedBirthday);
                 address.setText(fetchedAddress);
+                pBar.setVisibility(View.GONE);
+                profile.setVisibility(View.VISIBLE);
             }
         });
     }

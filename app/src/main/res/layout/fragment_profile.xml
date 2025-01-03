@@ -7,8 +7,19 @@
     tools:context=".ProfileFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:id="@+id/pBar"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="match_parent">
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
     <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/profile"
         android:layout_width="match_parent"
         android:padding="30dp"
         android:layout_height="match_parent"
